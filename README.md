@@ -1,2 +1,2 @@
 # React_tutorial
-it contains react tutorial projects
+it contains react tutorial project

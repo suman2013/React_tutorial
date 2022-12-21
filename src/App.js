@@ -7,7 +7,8 @@ class App extends React.Component{
     super(props);
     this.state = {
       newItem:"",
-      list : []
+      list : [],
+      doneList : [],
     }
   }
   addItems(todoValue){
@@ -23,6 +24,48 @@ class App extends React.Component{
         list,
         newItem:""
       });
+    }
+  }
+
+  addItemsToDone(id){
+    if(id !== ""){
+      const list = [...this.state.list];
+      const doneList = [...this.state.doneList];
+
+      list.map(item => {
+        if(item.id == id){
+          item.isDone = true;
+          doneList.push(item);
+        }
+      })
+
+      const newlist = list.filter(item => item.id != id);
+      console.log(newlist);
+      this.setState({
+        list: newlist,
+        doneList
+      })
+    }
+  }
+
+  addTotodo(id){
+    if(id != ""){
+      const list = [...this.state.list];
+      const doneList = [...this.state.doneList];
+
+      doneList.map(item => {
+        if(item.id == id){
+          item.isDone = false;
+          list.push(item);
+        }
+      });
+
+      const newDoneList = doneList.filter(item => item.id !== id);
+
+      this.setState({
+        list,
+        doneList : newDoneList
+      })
     }
   }
 
@@ -56,22 +99,54 @@ class App extends React.Component{
             onChange={e => this.updateInput(e.target.value)}
           />
           <button className="add-btn" onClick={() => this.addItems(this.state.newItem)} disabled={!this.state.newItem.length}>Add Todo</button>
-          <div className="list">
+
+          <div class="flex-container">
+            <div class="flex-child magenta">
+            <div className="list">
+            Todo List
+              <ul>
+                  {
+                  this.state.list.map(item => {
+                  return (
+                    <li key={item.id}>
+                      <input type="checkbox" id="idDone" checked={item.isDone} onClick={() => this.addItemsToDone(item.id)}/>
+                      {item.value}
+                      <button className="btn" onClick={() => this.deleteItem(item.id)}>Delete</button>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+            </div>
+            <div class="flex-child green">
+            <div className="list">
+            Done List
             <ul>
-              {this.state.list.map(item => {
-                return (
-                  <li key={item.id}>
-                    <input type="checkbox" id="idDone" checked={item.isDone} />
-                    {item.value}
-                    <button className="btn" onClick={() => this.deleteItem(item.id)}>Delete</button>
-                  </li>
-                )
-              })}
-              
+              {
+                this.state.doneList.map(item => {
+                  return (
+                    <li key={item.id}>
+                      <input type="checkbox" id="idDone" checked={item.isDone} onClick={() => this.addTotodo(item.id)}/>
+                      {item.value}
+                    </li>
+                  )
+                })
+              }
             </ul>
+            </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
           </div>
         </div>
-      </div>
+
     )
   }
 }

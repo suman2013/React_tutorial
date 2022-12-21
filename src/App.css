@@ -56,7 +56,6 @@ ul {
 }
 .list ul li {
   display: block;
-  width: 100%;
   text-decoration: none;
   color: #000000;
   background-color: #ffffff;
@@ -70,6 +69,24 @@ ul {
 
 .container {
   color: #fff;
-  max-width: 500px;
+  max-width: 1000px;
   margin: auto;
+}
+
+.flex-container {
+    display: flex;
+    overflow: hidden;
+    color:black;
+
+}
+
+.flex-child {
+    flex: 1;
+    border: none;
+    background-color: #D6CDCB;
+
+}
+
+.flex-child:first-child {
+    margin-right: 50px;
 }
